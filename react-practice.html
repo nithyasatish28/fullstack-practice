@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>React Practice · Warehouse Dispatch</title>
+<style>
+:root { --bg:#f7f7f4; --card:#ffffff; --text:#1b1d1c; --muted:#5d6461; --line:#e2e3df; --code:#f1f2ee;
+  --accent:#2f6f57; --ok:#e3f3e8; --ok-line:#2f8a55; --bad:#fbe9e7; --bad-line:#c0442f; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141615; --card:#1d201f; --text:#ecefed; --muted:#a3aba7; --line:#2f3432;
+  --code:#262a28; --accent:#6fc19c; --ok:#1d3428; --ok-line:#5cc08a; --bad:#3a2220; --bad-line:#ec7a66; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+main { max-width:780px; margin:0 auto; padding:28px 16px 64px; }
+header h1 { font-size:1.7rem; margin:0 0 6px; }
+.back { display:inline-block; margin-bottom:10px; color:var(--accent); text-decoration:none; font-weight:600; font-size:.92rem; }
+header p { color:var(--muted); margin:0 0 14px; }
+.score { position:sticky; top:0; z-index:5; background:var(--bg); padding:10px 0; border-bottom:1px solid var(--line); margin-bottom:8px;
+  display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.score nav a { color:var(--accent); text-decoration:none; margin-right:14px; font-weight:600; font-size:.92rem; }
+.score b { font-variant-numeric:tabular-nums; }
+h2 { font-size:1.25rem; margin:34px 0 4px; }
+.prep { color:var(--muted); margin:0 0 14px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin:0 0 14px; }
+.q-head { display:flex; gap:10px; align-items:center; margin-bottom:6px; }
+.num { font-weight:700; color:var(--accent); }
+.lang { font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:1px 8px; }
+.q-text { margin:0 0 10px; font-weight:600; }
+code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.9em; }
+p code, li code, .hint code { background:var(--code); padding:1px 5px; border-radius:4px; }
+pre { background:var(--code); border-radius:8px; padding:12px 14px; margin:0 0 12px; overflow-x:auto; line-height:1.45; }
+pre code { font-size:.86rem; }
+.opts { display:flex; flex-wrap:wrap; gap:8px; }
+.opt { font:inherit; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.9rem; color:var(--text); background:var(--card);
+  border:1.5px solid var(--line); border-radius:8px; padding:8px 12px; cursor:pointer; text-align:left; }
+.opt:hover { border-color:var(--accent); }
+.opt.correct { background:var(--ok); border-color:var(--ok-line); }
+.opt.wrong { background:var(--bad); border-color:var(--bad-line); }
+.feedback { margin-top:12px; padding:10px 12px; border-radius:8px; background:var(--code); }
+.feedback p { margin:0; }
+.verdict { font-weight:700; margin-bottom:4px !important; }
+.verdict.ok { color:var(--ok-line); } .verdict.bad { color:var(--bad-line); }
+details { margin-top:8px; }
+summary { cursor:pointer; color:var(--accent); font-weight:600; }
+.hint { margin:8px 0 0; }
+.sol { margin-top:8px; }
+footer { margin-top:30px; padding:16px 18px; border:1px dashed var(--line); border-radius:12px; color:var(--muted); }
+button.reset { font:inherit; font-size:.85rem; background:none; border:1px solid var(--line); color:var(--muted); border-radius:8px; padding:4px 10px; cursor:pointer; }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <a class="back" href="index.html">← All practice</a>
+  <h1>React Practice · Warehouse Dispatch</h1>
+  <p>React practice for the frontend Checkpoint question: <code>.map()</code>, putting values into JSX, keys, and showing something different for an empty list. Tap an answer to check it. For the “write” task, try it in your editor first, then open the hint or the solution.</p>
+</header>
+<div class="score">
+  <nav></nav>
+  <span>Correct first try: <b id="score">0</b> / 5 &nbsp; <button class="reset" id="reset">Start again</button></span>
+</div>
+<section id="s1"><h2>React lists and props</h2><p class="prep">Warm-up for the Checkpoint question <b>“Package list”</b>. <code>.map()</code>, putting values into JSX, keys, and showing something different for an empty list.</p><article class="card mcq" id="s1-1" data-answer="2"><div class="q-head"><span class="num">1.1</span><span class="lang">JavaScript</span></div><p class="q-text">What is the result?</p><pre><code>[1, 2, 3].map((n) =&gt; n * 2)</code></pre><div class="opts"><button class="opt" data-i="0">[1, 2, 3]</button><button class="opt" data-i="1">12</button><button class="opt" data-i="2">[2, 4, 6]</button></div><div class="feedback" hidden><p class="verdict"></p><p class="why"><code>.map()</code> runs the function on each item and builds a <b>new array</b> of the results, one per item.</p></div></article><article class="card mcq" id="s1-2" data-answer="2"><div class="q-head"><span class="num">1.2</span><span class="lang">JavaScript</span></div><p class="q-text">What does this log?</p><pre><code>const names = [&quot;Fan&quot;, &quot;Box&quot;];
+const items = names.map((n) =&gt; `${n}!`);
+console.log(items);</code></pre><div class="opts"><button class="opt" data-i="0">&quot;Fan!Box!&quot;</button><button class="opt" data-i="1">[&quot;Fan&quot;, &quot;Box&quot;]</button><button class="opt" data-i="2">[&quot;Fan!&quot;, &quot;Box!&quot;]</button></div><div class="feedback" hidden><p class="verdict"></p><p class="why">Each name becomes a new string with <code>!</code> added, and <code>.map()</code> keeps them in an array.</p></div></article><article class="card mcq" id="s1-3" data-answer="0"><div class="q-head"><span class="num">1.3</span><span class="lang">React</span></div><p class="q-text">What does <code>&lt;Badge label="Fan" /&gt;</code> show on the page?</p><pre><code>function Badge({ label }) {
+  return &lt;span&gt;{label} (new)&lt;/span&gt;;
+}</code></pre><div class="opts"><button class="opt" data-i="0">Fan (new)</button><button class="opt" data-i="1">{label} (new)</button><button class="opt" data-i="2">label (new)</button></div><div class="feedback" hidden><p class="verdict"></p><p class="why">Curly braces put a value into JSX, so <code>{label}</code> becomes <code>Fan</code>. The normal text around it, <code> (new)</code>, stays as it is.</p></div></article><article class="card mcq" id="s1-4" data-answer="2"><div class="q-head"><span class="num">1.4</span><span class="lang">React</span></div><p class="q-text">Why do we write <code>key={pkg.id}</code> on each <code>&lt;li&gt;</code> in a list?</p><pre><code>{packages.map((pkg) =&gt; (
+  &lt;li key={pkg.id}&gt;{pkg.name}&lt;/li&gt;
+))}</code></pre><div class="opts"><button class="opt" data-i="0">To give each item a different style</button><button class="opt" data-i="1">Without it the &lt;ul&gt; shows nothing</button><button class="opt" data-i="2">So React can tell the items apart when the list changes</button></div><div class="feedback" hidden><p class="verdict"></p><p class="why">React uses <code>key</code> to track which item is which when the list updates. Without it the list still shows, but React prints a warning in the console. Use something unique, like an id.</p></div></article><article class="card mcq" id="s1-5" data-answer="1"><div class="q-head"><span class="num">1.5</span><span class="lang">React</span></div><p class="q-text">What does <code>&lt;Cart items={[]} /&gt;</code> show?</p><pre><code>function Cart({ items }) {
+  if (items.length === 0) {
+    return &lt;p&gt;Cart is empty&lt;/p&gt;;
+  }
+  return &lt;ul&gt;{items.map((i) =&gt; &lt;li key={i}&gt;{i}&lt;/li&gt;)}&lt;/ul&gt;;
+}</code></pre><div class="opts"><button class="opt" data-i="0">An empty list (&lt;ul&gt;&lt;/ul&gt;)</button><button class="opt" data-i="1">Cart is empty</button><button class="opt" data-i="2">Nothing at all</button></div><div class="feedback" hidden><p class="verdict"></p><p class="why"><code>items.length</code> is 0, so the first <code>return</code> runs and the function stops there. Checking the empty case first is a common pattern.</p></div></article><article class="card write" id="s1-6"><div class="q-head"><span class="num">1.6</span><span class="lang">React</span></div><p class="q-text">Write <code>NameList</code>. It shows each name in the <code>names</code> prop as an <code>&lt;li&gt;</code> inside a <code>&lt;ul&gt;</code>.</p><pre><code>function NameList({ names }) {
+  return &lt;ul&gt;&lt;/ul&gt;;
+}
+
+function App() {
+  return &lt;NameList names={[&quot;Asha&quot;, &quot;Ravi&quot;]} /&gt;;
+}</code></pre><details><summary>Show hint</summary><p class="hint">Inside the <code>&lt;ul&gt;</code>, use <code>{names.map((name) =&gt; &lt;li key={name}&gt;{name}&lt;/li&gt;)}</code>.</p></details><details><summary>Show solution</summary><pre class="sol"><code>function NameList({ names }) {
+  return (
+    &lt;ul&gt;
+      {names.map((name) =&gt; (
+        &lt;li key={name}&gt;{name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+
+function App() {
+  return &lt;NameList names={[&quot;Asha&quot;, &quot;Ravi&quot;]} /&gt;;
+}</code></pre></details></article></section>
+</main>
+<script>
+const scoreEl = document.getElementById("score");
+let score = 0;
+document.querySelectorAll(".mcq").forEach((card) => {
+  const answer = Number(card.dataset.answer);
+  const fb = card.querySelector(".feedback");
+  const verdict = card.querySelector(".verdict");
+  let tried = false;
+  card.querySelectorAll(".opt").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const picked = Number(btn.dataset.i);
+      const right = picked === answer;
+      if (!tried && right) { score += 1; scoreEl.textContent = score; }
+      tried = true;
+      card.querySelectorAll(".opt").forEach((b) => b.classList.remove("correct", "wrong"));
+      btn.classList.add(right ? "correct" : "wrong");
+      if (!right) card.querySelector(`.opt[data-i="${answer}"]`).classList.add("correct");
+      verdict.textContent = right ? "Correct!" : "Not quite. The right answer is highlighted.";
+      verdict.className = "verdict " + (right ? "ok" : "bad");
+      fb.hidden = false;
+    });
+  });
+  card.resetCard = () => { tried = false; fb.hidden = true; card.querySelectorAll(".opt").forEach((b) => b.classList.remove("correct", "wrong")); };
+});
+document.getElementById("reset").addEventListener("click", () => {
+  score = 0; scoreEl.textContent = 0;
+  document.querySelectorAll(".mcq").forEach((c) => c.resetCard());
+  document.querySelectorAll("details").forEach((d) => (d.open = false));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+</body>
+</html>
